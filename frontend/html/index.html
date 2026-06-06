@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraNumerology — Unlock Your Destiny's Code</title>
+    <meta name="description"
+        content="Discover your life path, soul urge, and destiny numbers. Book a premium consultation slot with our expert numerologists.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Razorpay Checkout SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <!-- Background Cosmic Glows -->
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+    <div class="stars"></div>
+
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo" id="header-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="url(#goldGrad)" stroke-width="1.5" />
+                    <circle cx="12" cy="12" r="6" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="2 2" />
+                    <path d="M12 2V6M12 18V22M2 12H6M18 12H22" stroke="url(#goldGrad)" stroke-width="1.5"
+                        stroke-linecap="round" />
+                    <defs>
+                        <linearGradient id="goldGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#F39C12" />
+                            <stop offset="50%" stop-color="#F1C40F" />
+                            <stop offset="100%" stop-color="#F39C12" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>AURA<span>NUMEROLOGY</span></span>
+            </div>
+            <nav class="nav-links">
+                <a href="#landing-view" class="nav-link active">Consultations</a>
+                <a href="#" class="nav-link">About Numerology</a>
+                <a href="#" class="nav-link">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- VIEW 1: LANDING & PRICING -->
+        <section id="landing-view" class="view active">
+            <div class="hero-section">
+                <h1 class="hero-title">Decode the Secrets of <span class="glow-text">Your Numbers</span></h1>
+                <p class="hero-subtitle">Book a session to decode your core numbers and get instant clarity.</p>
+            </div>
+
+            <!-- Pricing Grid -->
+            <div class="pricing-grid" id="pricing-grid">
+                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: rgba(255,255,255,0.7);">
+                    <span>Loading session packages...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: DETAILS FORM -->
+        <section id="booking-view" class="view">
+            <div class="form-container-wrapper">
+                <div class="back-nav">
+                    <button id="back-btn" class="btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Back to Pricing
+                    </button>
+                </div>
+
+                <div class="booking-layout">
+                    <!-- Form Summary Info -->
+                    <div class="booking-summary-card">
+                        <h3>Your Selection</h3>
+                        <div class="selection-details">
+                            <div class="selection-item">
+                                <span class="label">Reading Plan:</span>
+                                <span id="summary-tier" class="value">Soul Path Alignment</span>
+                            </div>
+                            <div class="selection-item">
+                                <span class="label">Duration:</span>
+                                <span id="summary-duration" class="value">45 Minutes</span>
+                            </div>
+                            <div class="selection-item">
+                                <span class="label">Appointment:</span>
+                                <span id="summary-date-time" class="value select-highlight">Select Below</span>
+                            </div>
+                            <div class="selection-item">
+                                <span class="label">Cost:</span>
+                                <span id="summary-price" class="value price-highlight">₹750</span>
+                            </div>
+                        </div>
+                        <div class="cosmic-tip">
+                            <p>Please enter your exact details to ensure accurate calculations.</p>
+                        </div>
+                    </div>
+
+                    <!-- Main Form -->
+                    <div class="booking-form-card">
+                        <h2 class="form-title">Consultation Details</h2>
+                        <p class="form-subtitle">Enter your details below to finalize booking.</p>
+
+                        <form id="details-form" novalidate>
+                            <div class="form-grid">
+                                <!-- Full Name -->
+                                <div class="form-group full-width">
+                                    <label for="full-name">Full Name</label>
+                                    <div class="input-container">
+                                        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                            <circle cx="12" cy="7" r="4" />
+                                        </svg>
+                                        <input type="text" id="full-name" placeholder="e.g. Rahul Kumar" required>
+                                    </div>
+                                    <span class="error-msg">Please enter your full name.</span>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <div class="input-container">
+                                        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path
+                                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                            <polyline points="22,6 12,13 2,6" />
+                                        </svg>
+                                        <input type="email" id="email" placeholder="rahul@example.com" required>
+                                    </div>
+                                    <span class="error-msg">Please enter a valid email.</span>
+                                </div>
+
+                                <!-- Phone -->
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <div class="input-container">
+                                        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path
+                                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                        </svg>
+                                        <input type="tel" id="phone" placeholder="+91 1234567890" required>
+                                    </div>
+                                    <span class="error-msg">Please enter your phone number.</span>
+                                </div>
+
+                                <!-- Birth Date -->
+                                <div class="form-group">
+                                    <label for="birth-date">Birth Date</label>
+                                    <div class="input-container">
+                                        <input type="date" id="birth-date" required>
+                                    </div>
+                                    <span class="error-msg">Please select your birth date.</span>
+                                </div>
+
+                                <!-- Birth Time -->
+                                <div class="form-group">
+                                    <label for="birth-time">Birth Time</label>
+                                    <div class="input-container">
+                                        <input type="time" id="birth-time" required>
+                                    </div>
+                                    <span class="error-msg">Please select your birth time.</span>
+                                </div>
+
+                                <!-- Birth Place -->
+                                <div class="form-group full-width">
+                                    <label for="birth-place">Birth Place</label>
+                                    <div class="input-container">
+                                        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                            <circle cx="12" cy="10" r="3" />
+                                        </svg>
+                                        <input type="text" id="birth-place" placeholder="Ahmedabad, Gujarat, India"
+                                            required>
+                                    </div>
+                                    <span class="error-msg">Please enter your birth place.</span>
+                                </div>
+
+                                <!-- Question -->
+                                <div class="form-group full-width">
+                                    <label for="question">Your Question</label>
+                                    <div class="input-container textarea-container">
+                                        <textarea id="question" rows="3"
+                                            placeholder="E.g., What career opportunities do my numbers predict for next year?"
+                                            required></textarea>
+                                    </div>
+                                    <span class="error-msg">Please share your main question.</span>
+                                </div>
+
+                                <!-- Appointment Date -->
+                                <div class="form-group">
+                                    <label for="booking-date">Choose Appointment Date</label>
+                                    <div class="input-container">
+                                        <input type="date" id="booking-date" required>
+                                    </div>
+                                    <span class="error-msg">Please select your appointment date.</span>
+                                </div>
+
+                                <!-- Appointment Time -->
+                                <div class="form-group">
+                                    <label for="booking-time">Choose Appointment Time Slot</label>
+                                    <div class="input-container">
+                                        <select id="booking-time" required disabled>
+                                            <option value="">Select Date First</option>
+                                        </select>
+                                    </div>
+                                    <span class="error-msg">Please select an available time slot.</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" id="submit-btn" class="btn-primary">
+                                Pay & Book Consultation
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: SUCCESS STATE -->
+        <section id="success-view" class="view">
+            <div class="success-card">
+                <div class="success-icon-wrapper">
+                    <svg class="success-check-svg" width="64" height="64" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="#D4AF37" stroke-width="1.5"
+                            fill="rgba(212, 175, 55, 0.1)" />
+                        <path d="M8 12.5L11 15.5L16 9" stroke="#E5C158" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <h2 class="success-title">Your Session is Reserved</h2>
+                <p class="success-message">A confirmation email has been sent. Your details have been transmitted to prepare your custom chart analysis prior to our session.</p>
+
+                <div class="booking-receipt">
+                    <div class="receipt-row">
+                        <span class="label">Consultation:</span>
+                        <span id="receipt-tier" class="value">Soul Path Alignment</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="label">Booked Slot:</span>
+                        <span id="receipt-time" class="value highlight">10:00 AM EST</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span class="label">Name:</span>
+                        <span id="receipt-name" class="value">John Doe</span>
+                    </div>
+                </div>
+
+                <div class="calculating-overlay">
+                    <div class="spinner"></div>
+                    <span>Aligning destiny coefficients...</span>
+                </div>
+
+                <button id="reset-btn" class="btn-primary">Book Another Session</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 AuraNumerology. All paths aligned. Designed for spiritual growth.</p>
+    </footer>
+
+    <!-- App Script -->
+    <script src="../js/app.js"></script>
+</body>
+
+</html>
