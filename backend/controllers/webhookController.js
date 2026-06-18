@@ -173,6 +173,10 @@ const handleWebhook = async (req, res) => {
                     const user = await User.findById(appointment.userId);
                     const pack = await AppointmentPackage.findById(appointment.packageId);
                     if (user && pack) {
+                        if (user.paymentStatus !== 'paid') {
+                            user.paymentStatus = 'paid';
+                            await user.save();
+                        }
                         sendEmailNotifications(appointment, user, pack);
                     }
                 }

@@ -18,7 +18,6 @@ const createOrder = async (req, res) => {
             return res.status(400).json({ error: 'pricing plan tier (slug) is required' });
         }
 
-        // Fetch package from database
         const pack = await AppointmentPackage.findOne({ slug: tier, isActive: true });
         if (!pack) {
             return res.status(404).json({ error: `Pricing package '${tier}' not found` });
@@ -48,7 +47,6 @@ const sendEmailNotifications = async (appointment, user, pack) => {
 
     const formattedDate = new Date(appointment.scheduledDate).toISOString().split('T')[0];
 
-    // Client Confirmation Email
     const clientMailOptions = {
         from: fromSender,
         to: user.email,
@@ -58,7 +56,6 @@ const sendEmailNotifications = async (appointment, user, pack) => {
                 <h2 style="color: #6c5ce7; text-align: center;">Session Confirmed!</h2>
                 <p>Hello <strong>${user.name}</strong>,</p>
                 <p>Your booking details have been successfully received and verified. Our expert numerologist is preparing your chart.</p>
-                
                 <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin: 20px 0;">
                     <h3 style="margin-top: 0; color: #333;">Booking Summary</h3>
                     <table style="width: 100%; border-collapse: collapse;">
@@ -85,14 +82,11 @@ const sendEmailNotifications = async (appointment, user, pack) => {
                     </table>
                 </div>
                 <p>Please ensure you are available online during the selected slot. An invitation link will be sent to this email address shortly.</p>
-                <p style="color: #666; font-size: 0.9em; margin-top: 30px; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
-                    &copy; 2026 AuraNumerology. All paths aligned.
-                </p>
+                <p style="color: #666; font-size: 0.9em; margin-top: 30px; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">&copy; 2026 AuraNumerology. All paths aligned.</p>
             </div>
         `
     };
 
-    // Admin Notification Email
     const adminMailOptions = {
         from: fromSender,
         to: adminEmail,
@@ -100,26 +94,21 @@ const sendEmailNotifications = async (appointment, user, pack) => {
         html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; color: #333;">
                 <h2 style="color: #d4af37; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">New Consultation Request</h2>
-                
                 <h3>Customer Information</h3>
                 <p><strong>Name:</strong> ${user.name}</p>
                 <p><strong>Email:</strong> ${user.email}</p>
                 <p><strong>Phone:</strong> ${user.phone}</p>
-                
                 <h3>Consultation Appointment</h3>
                 <p><strong>Plan Selected:</strong> ${pack.title} (₹${appointment.amount})</p>
                 <p><strong>Scheduled Slot:</strong> ${formattedDate} at ${appointment.scheduledTime}</p>
-                
                 <h3>Chart Calculation Inputs</h3>
                 <p><strong>Birth Date:</strong> ${user.dateOfBirth.toISOString().split('T')[0]}</p>
                 <p><strong>Birth Time:</strong> ${user.birthTime}</p>
                 <p><strong>Birth Place:</strong> ${user.birthPlace}</p>
-                
                 <div style="background-color: #fffde7; border-left: 4px solid #d4af37; padding: 15px; margin: 20px 0;">
                     <p style="margin: 0; font-weight: bold;">User's Question:</p>
                     <p style="margin: 5px 0 0 0; font-style: italic;">"${appointment.question}"</p>
                 </div>
-                
                 <p style="font-size: 0.85em; color: #888;">Transaction verified via Razorpay Order ID: ${appointment.razorpayOrderId}</p>
             </div>
         `
@@ -141,6 +130,17 @@ const sendEmailNotifications = async (appointment, user, pack) => {
  * POST /api/payments/verify
  */
 const verifyPaymentAndBook = async (req, res) => {
+    let user = null;
+
+    const updateUserStatus = async (status) => {
+        if (!user) {
+            return;
+        }
+
+        user.paymentStatus = status;
+        await user.save();
+    };
+
     try {
         const {
             razorpay_payment_id,
@@ -153,7 +153,17 @@ const verifyPaymentAndBook = async (req, res) => {
             return res.status(400).json({ error: 'Missing required payment verification details' });
         }
 
-        // 1. Verify Razorpay signature
+        user = new User({
+            name: bookingDetails.fullName.trim(),
+            email: bookingDetails.email.toLowerCase().trim(),
+            phone: bookingDetails.phone.trim(),
+            dateOfBirth: new Date(bookingDetails.birthDate),
+            birthTime: bookingDetails.birthTime,
+            birthPlace: bookingDetails.birthPlace.trim(),
+            paymentStatus: 'pending'
+        });
+        await user.save();
+
         const isSignatureValid = razorpayService.verifySignature(
             razorpay_order_id,
             razorpay_payment_id,
@@ -161,10 +171,10 @@ const verifyPaymentAndBook = async (req, res) => {
         );
 
         if (!isSignatureValid) {
+            await updateUserStatus('failed');
             return res.status(400).json({ error: 'Payment signature verification failed. Transaction is invalid.' });
         }
 
-        // 2. Double-Booking Prevention: Verify the chosen slot hasn't been booked in the meantime
         const slotDate = bookingDetails.bookedDate;
         const slotTime = bookingDetails.bookedTime;
         const candidateRange = parseSlotRange(slotTime);
@@ -174,20 +184,19 @@ const verifyPaymentAndBook = async (req, res) => {
         const endOfDay = new Date(slotDate);
         endOfDay.setHours(23, 59, 59, 999);
 
-        // Fetch active bookings for the same day
         const existingBookings = await Appointment.find({
             scheduledDate: { $gte: startOfDay, $lte: endOfDay },
             appointmentStatus: { $nin: ['Cancelled'] }
         });
 
-        // Check for overlaps
         for (const appt of existingBookings) {
             try {
                 const bookedRange = parseSlotRange(appt.scheduledTime);
                 if (checkOverlap(candidateRange.start, candidateRange.end, bookedRange.start, bookedRange.end)) {
+                    await updateUserStatus('failed');
                     console.warn(`Double-booking attempt prevented for date: ${slotDate}, slot: ${slotTime}`);
-                    return res.status(400).json({ 
-                        error: 'This slot has already been reserved by another user. Please select a different slot.' 
+                    return res.status(400).json({
+                        error: 'This slot has already been reserved by another user. Please select a different slot.'
                     });
                 }
             } catch (err) {
@@ -195,33 +204,16 @@ const verifyPaymentAndBook = async (req, res) => {
             }
         }
 
-        // 3. Find or Create User
-        const cleanEmail = bookingDetails.email.toLowerCase().trim();
-        let user = await User.findOne({ email: cleanEmail });
-        if (!user) {
-            user = new User({
-                name: bookingDetails.fullName.trim(),
-                email: cleanEmail,
-                phone: bookingDetails.phone.trim(),
-                dateOfBirth: new Date(bookingDetails.birthDate),
-                birthTime: bookingDetails.birthTime,
-                birthPlace: bookingDetails.birthPlace.trim()
-            });
-            await user.save();
-        }
-
-        // 4. Resolve package
         let pack = await AppointmentPackage.findOne({ title: bookingDetails.planName });
         if (!pack) {
-            // fallback checking by parsing numeric price
             const numericPrice = parseInt(bookingDetails.price.replace(/[^\d]/g, ''), 10);
             pack = await AppointmentPackage.findOne({ price: numericPrice });
         }
         if (!pack) {
+            await updateUserStatus('failed');
             return res.status(400).json({ error: 'Could not resolve appointment package from booking details.' });
         }
 
-        // 5. Create or Update Appointment
         let appointment = await Appointment.findOne({ razorpayOrderId: razorpay_order_id });
         if (!appointment) {
             appointment = new Appointment({
@@ -242,7 +234,6 @@ const verifyPaymentAndBook = async (req, res) => {
             await appointment.save();
         }
 
-        // 6. Record Payment
         let payment = await Payment.findOne({ razorpayPaymentId: razorpay_payment_id });
         if (!payment) {
             payment = new Payment({
@@ -257,7 +248,7 @@ const verifyPaymentAndBook = async (req, res) => {
             await payment.save();
         }
 
-        // 7. Send Emails asynchronously
+        await updateUserStatus('paid');
         sendEmailNotifications(appointment, user, pack);
 
         return res.status(200).json({
@@ -266,6 +257,14 @@ const verifyPaymentAndBook = async (req, res) => {
             appointment
         });
     } catch (error) {
+        if (user && user.paymentStatus !== 'paid') {
+            try {
+                await updateUserStatus('failed');
+            } catch (saveError) {
+                console.error('Failed to update user payment status to failed:', saveError);
+            }
+        }
+
         console.error('Payment verification and booking error:', error);
         return res.status(500).json({ error: 'An error occurred during booking validation' });
     }

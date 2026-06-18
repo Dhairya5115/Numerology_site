@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraNumerology — Unlock Your Destiny's Code</title>
+    <title>AuraNumerology — Premium Numerology Consultation</title>
     <meta name="description"
         content="Discover your life path, soul urge, and destiny numbers. Book a premium consultation slot with our expert numerologists.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Razorpay Checkout SDK -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <!-- CSS Stylesheet -->
@@ -20,267 +20,413 @@
 </head>
 
 <body>
-    <!-- Background Cosmic Glows -->
-    <div class="nebula nebula-1"></div>
-    <div class="nebula nebula-2"></div>
-    <div class="stars"></div>
-
-    <header class="app-header">
-        <div class="header-container">
-            <div class="logo" id="header-logo">
+    <!-- Sticky Centered Header -->
+    <header class="app-header bg-white border-bottom sticky-top py-3">
+        <div class="container d-flex align-items-center justify-content-between">
+            <div class="header-left d-none d-lg-block"></div>
+            
+            <div class="logo d-flex align-items-center gap-2 m-0 text-dark fw-bold" id="header-logo" style="cursor: pointer;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" stroke="url(#goldGrad)" stroke-width="1.5" />
-                    <circle cx="12" cy="12" r="6" stroke="url(#goldGrad)" stroke-width="1" stroke-dasharray="2 2" />
-                    <path d="M12 2V6M12 18V22M2 12H6M18 12H22" stroke="url(#goldGrad)" stroke-width="1.5"
-                        stroke-linecap="round" />
-                    <defs>
-                        <linearGradient id="goldGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-                            <stop offset="0%" stop-color="#F39C12" />
-                            <stop offset="50%" stop-color="#F1C40F" />
-                            <stop offset="100%" stop-color="#F39C12" />
-                        </linearGradient>
-                    </defs>
+                    <rect x="3" y="3" width="6" height="6" rx="1.5" fill="currentColor"/>
+                    <rect x="15" y="3" width="6" height="6" rx="1.5" fill="currentColor"/>
+                    <rect x="3" y="15" width="6" height="6" rx="1.5" fill="currentColor"/>
+                    <rect x="15" y="15" width="6" height="6" rx="1.5" fill="currentColor"/>
+                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
                 </svg>
-                <span>AURA<span>NUMEROLOGY</span></span>
+                <span class="fs-5" style="letter-spacing: 0.05em;">AURA<span style="color: #0F2747;">NUMEROLOGY</span></span>
             </div>
-            <nav class="nav-links">
-                <a href="#landing-view" class="nav-link active">Consultations</a>
-                <a href="#" class="nav-link">About Numerology</a>
-                <a href="#" class="nav-link">Contact</a>
-            </nav>
+            
+            <div class="header-right text-end">
+                <a href="login.html" class="btn btn-outline-secondary px-3 py-2 rounded-3 fw-semibold" style="font-size: 0.85rem;">Admin Login</a>
+            </div>
         </div>
     </header>
 
     <main class="main-content">
         <!-- VIEW 1: LANDING & PRICING -->
         <section id="landing-view" class="view active">
-            <div class="hero-section">
-                <h1 class="hero-title">Decode the Secrets of <span class="glow-text">Your Numbers</span></h1>
-                <p class="hero-subtitle">Book a session to decode your core numbers and get instant clarity.</p>
+            <!-- Hero Section -->
+            <div class="hero-section container py-5" style="min-height: 85vh; display: flex; align-items: center;">
+                <div class="row align-items-center w-100 g-5 m-0">
+                    <div class="col-lg-6 text-start hero-left p-0">
+                        <h1 class="display-1 fw-bold text-dark mb-4" style="letter-spacing: -0.03em; line-height: 1.1;">Decode the Secrets of Your Numbers</h1>
+                        <p class="fs-5 text-secondary mb-5" style="max-width: 540px; font-weight: 400; line-height: 1.6;">Book a session to decode your core numbers and get instant clarity. Explore destiny alignment with our premium, data-driven consultation packages.</p>
+                        <div class="hero-actions d-flex gap-3 flex-wrap">
+                            <!-- <a href="#pricing-grid" class="btn btn-primary btn-lg px-4 py-3 rounded-3 text-white fw-semibold" style="font-size: 1rem;">Book Consultation</a> -->
+                            <a href="#pricing-grid" class="btn btn-outline-secondary btn-lg px-4 py-3 rounded-3 fw-semibold" style="font-size: 1rem;">View Plans</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex justify-content-center hero-right p-0">
+                        <div class="numeric-pattern w-100" style="max-width: 380px;">
+                            <svg viewBox="0 0 400 400" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="50" y1="50" x2="350" y2="50" stroke="currentColor" stroke-width="1.5"/>
+                                <line x1="50" y1="150" x2="350" y2="150" stroke="currentColor" stroke-width="1.5"/>
+                                <line x1="50" y1="250" x2="350" y2="250" stroke="currentColor" stroke-width="1.5"/>
+                                <line x1="50" y1="350" x2="350" y2="350" stroke="currentColor" stroke-width="1.5"/>
+                                
+                                <line x1="50" y1="50" x2="50" y2="350" stroke="currentColor" stroke-width="1.5"/>
+                                <line x1="150" y1="50" x2="150" y2="350" stroke="currentColor" stroke-width="1.5"/>
+                                <line x1="250" y1="50" x2="250" y2="350" stroke="currentColor" stroke-width="1.5"/>
+                                <line x1="350" y1="50" x2="350" y2="350" stroke="currentColor" stroke-width="1.5"/>
+                                
+                                <text x="100" y="112" font-family="Inter, sans-serif" font-size="38" font-weight="300" fill="currentColor" text-anchor="middle">3</text>
+                                <text x="200" y="112" font-family="Inter, sans-serif" font-size="38" font-weight="300" fill="currentColor" text-anchor="middle">8</text>
+                                <text x="300" y="112" font-family="Inter, sans-serif" font-size="38" font-weight="600" fill="currentColor" text-anchor="middle">1</text>
+                                
+                                <text x="100" y="212" font-family="Inter, sans-serif" font-size="38" font-weight="600" fill="currentColor" text-anchor="middle">5</text>
+                                <text x="200" y="212" font-family="Inter, sans-serif" font-size="38" font-weight="300" fill="currentColor" text-anchor="middle">2</text>
+                                <text x="300" y="212" font-family="Inter, sans-serif" font-size="38" font-weight="300" fill="currentColor" text-anchor="middle">7</text>
+                                
+                                <text x="100" y="312" font-family="Inter, sans-serif" font-size="38" font-weight="300" fill="currentColor" text-anchor="middle">9</text>
+                                <text x="200" y="312" font-family="Inter, sans-serif" font-size="38" font-weight="600" fill="currentColor" text-anchor="middle">6</text>
+                                <text x="300" y="312" font-family="Inter, sans-serif" font-size="38" font-weight="300" fill="currentColor" text-anchor="middle">4</text>
+                                
+                                <circle cx="100" cy="200" r="30" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" fill="none" opacity="0.3"/>
+                                <circle cx="300" cy="100" r="6" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Pricing Grid -->
-            <div class="pricing-grid" id="pricing-grid">
-                <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: rgba(255,255,255,0.7);">
-                    <span>Loading session packages...</span>
+            <!-- Pricing Grid Section -->
+            <div class="container py-5 border-top">
+                <div class="text-center mb-5">
+                    <h2 class="display-6 fw-semibold text-dark mb-3">Choose Your Consultation Plan</h2>
+                    <p class="fs-5 text-secondary mx-auto" style="max-width: 600px;">Select a structured analysis session to begin decoding your destiny parameters.</p>
+                </div>
+                <!-- Dynamic pricing grid target -->
+                <div class="pricing-grid row g-4 justify-content-center" id="pricing-grid">
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666666;">
+                        <span>Loading session packages...</span>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- VIEW 2: DETAILS FORM -->
-        <section id="booking-view" class="view">
-            <div class="form-container-wrapper">
-                <div class="back-nav">
-                    <button id="back-btn" class="btn-secondary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="19" y1="12" x2="5" y2="12"></line>
-                            <polyline points="12 19 5 12 12 5"></polyline>
-                        </svg>
-                        Back to Pricing
-                    </button>
-                </div>
+        <section id="booking-view" class="view container py-5">
+            <div class="mb-4">
+                <button id="back-btn" class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 px-3 py-2 rounded-3" style="font-size: 0.9rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Pricing
+                </button>
+            </div>
 
-                <div class="booking-layout">
-                    <!-- Form Summary Info -->
-                    <div class="booking-summary-card">
-                        <h3>Your Selection</h3>
-                        <div class="selection-details">
-                            <div class="selection-item">
-                                <span class="label">Reading Plan:</span>
-                                <span id="summary-tier" class="value">Soul Path Alignment</span>
-                            </div>
-                            <div class="selection-item">
-                                <span class="label">Duration:</span>
-                                <span id="summary-duration" class="value">45 Minutes</span>
-                            </div>
-                            <div class="selection-item">
-                                <span class="label">Appointment:</span>
-                                <span id="summary-date-time" class="value select-highlight">Select Below</span>
-                            </div>
-                            <div class="selection-item">
-                                <span class="label">Cost:</span>
-                                <span id="summary-price" class="value price-highlight">₹750</span>
-                            </div>
-                        </div>
-                        <div class="cosmic-tip">
-                            <p>Please enter your exact details to ensure accurate calculations.</p>
-                        </div>
-                    </div>
+            <form id="details-form" novalidate>
+                <div class="row g-5">
+                    <!-- Booking Form Section -->
+                    <div class="col-lg-7">
+                        <div class="bg-white p-4 p-md-5 border rounded-4 shadow-sm">
+                            <h2 class="display-6 fs-3 fw-bold text-dark mb-2">Consultation Details</h2>
+                            <p class="text-secondary mb-4 fs-6">Enter your details below to finalize booking.</p>
 
-                    <!-- Main Form -->
-                    <div class="booking-form-card">
-                        <h2 class="form-title">Consultation Details</h2>
-                        <p class="form-subtitle">Enter your details below to finalize booking.</p>
-
-                        <form id="details-form" novalidate>
-                            <div class="form-grid">
+                            <div class="row g-3">
                                 <!-- Full Name -->
-                                <div class="form-group full-width">
-                                    <label for="full-name">Full Name</label>
-                                    <div class="input-container">
-                                        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2">
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                            <circle cx="12" cy="7" r="4" />
-                                        </svg>
-                                        <input type="text" id="full-name" placeholder="e.g. Rahul Kumar" required>
-                                    </div>
+                                <div class="col-12 form-group">
+                                    <label class="form-label fw-semibold text-dark mb-1" for="full-name">Full Name</label>
+                                    <input type="text" id="full-name" class="form-control form-control-lg rounded-3 fs-6" placeholder="e.g. Rahul Kumar" required>
                                     <span class="error-msg">Please enter your full name.</span>
                                 </div>
 
                                 <!-- Email -->
-                                <div class="form-group">
-                                    <label for="email">Email Address</label>
-                                    <div class="input-container">
-                                        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2">
-                                            <path
-                                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                            <polyline points="22,6 12,13 2,6" />
-                                        </svg>
-                                        <input type="email" id="email" placeholder="rahul@example.com" required>
-                                    </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="form-label fw-semibold text-dark mb-1" for="email">Email Address</label>
+                                    <input type="email" id="email" class="form-control form-control-lg rounded-3 fs-6" placeholder="rahul@example.com" required>
                                     <span class="error-msg">Please enter a valid email.</span>
                                 </div>
 
                                 <!-- Phone -->
-                                <div class="form-group">
-                                    <label for="phone">Phone Number</label>
-                                    <div class="input-container">
-                                        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2">
-                                            <path
-                                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                                        </svg>
-                                        <input type="tel" id="phone" placeholder="+91 1234567890" required>
-                                    </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="form-label fw-semibold text-dark mb-1" for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" class="form-control form-control-lg rounded-3 fs-6" placeholder="1234567890" required maxlength="10">
                                     <span class="error-msg">Please enter your phone number.</span>
                                 </div>
 
                                 <!-- Birth Date -->
-                                <div class="form-group">
-                                    <label for="birth-date">Birth Date</label>
-                                    <div class="input-container">
-                                        <input type="date" id="birth-date" required>
+                                <div class="col-md-6 form-group date-time-group custom-picker-group">
+                                    <label class="form-label fw-semibold text-dark mb-1" for="birth-date">Birth Date</label>
+                                    <button type="button" id="birth-date-trigger" class="custom-picker-trigger" aria-haspopup="dialog" aria-expanded="false" aria-controls="birth-date-popover">
+                                        <span class="custom-picker-trigger-main" id="birth-date-display">Choose your birth date</span>
+                                        <span class="custom-picker-trigger-icon" aria-hidden="true">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="4" width="18" height="17" rx="3"></rect>
+                                                <line x1="8" y1="2.5" x2="8" y2="6"></line>
+                                                <line x1="16" y1="2.5" x2="16" y2="6"></line>
+                                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <input type="date" id="birth-date" class="custom-picker-storage" required tabindex="-1" aria-hidden="true">
+                                    <div id="birth-date-popover" class="custom-picker-popover date-picker-popover" hidden>
+                                        <div class="picker-panel">
+                                            <div class="picker-panel-header">
+                                                <button type="button" class="picker-nav-btn" id="birth-date-prev" aria-label="Previous month">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                                    </svg>
+                                                </button>
+                                                <div class="picker-panel-title date-picker-controls">
+                                                    <select id="birth-date-month-select" class="picker-select" aria-label="Birth month"></select>
+                                                    <select id="birth-date-year-select" class="picker-select" aria-label="Birth year"></select>
+                                                </div>
+                                                <button type="button" class="picker-nav-btn" id="birth-date-next" aria-label="Next month">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div class="picker-weekdays">
+                                                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                                            </div>
+                                            <div id="birth-date-grid" class="picker-grid"></div>
+                                        </div>
                                     </div>
                                     <span class="error-msg">Please select your birth date.</span>
                                 </div>
 
                                 <!-- Birth Time -->
-                                <div class="form-group">
-                                    <label for="birth-time">Birth Time</label>
-                                    <div class="input-container">
-                                        <input type="time" id="birth-time" required>
+                                <div class="col-md-6 form-group date-time-group custom-picker-group">
+                                    <label class="form-label fw-semibold text-dark mb-1" for="birth-time">Birth Time</label>
+                                    <button type="button" id="birth-time-trigger" class="custom-picker-trigger" aria-haspopup="dialog" aria-expanded="false" aria-controls="birth-time-popover">
+                                        <span class="custom-picker-trigger-main" id="birth-time-display">Choose your birth time</span>
+                                        <span class="custom-picker-trigger-icon" aria-hidden="true">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="9"></circle>
+                                                <polyline points="12 7 12 12 15.5 14"></polyline>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <input type="time" id="birth-time" class="custom-picker-storage" required step="60" tabindex="-1" aria-hidden="true">
+                                    <div id="birth-time-popover" class="custom-picker-popover time-picker-popover" hidden>
+                                        <div class="picker-panel time-panel">
+                                            <div class="picker-panel-header time-panel-header">
+                                                <div class="picker-panel-title">
+                                                    <span>Birth Time</span>
+                                                </div>
+                                            </div>
+                                            <div class="time-picker-layout">
+                                                <div class="time-picker-column">
+                                                    <div class="time-picker-column-title">Hour</div>
+                                                    <div id="birth-time-hour-grid" class="time-grid time-grid--compact"></div>
+                                                </div>
+                                                <div class="time-picker-column">
+                                                    <div class="time-picker-column-title">Minute</div>
+                                                    <div id="birth-time-minute-grid" class="time-grid time-grid--compact minute-grid"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <span class="error-msg">Please select your birth time.</span>
                                 </div>
 
                                 <!-- Birth Place -->
-                                <div class="form-group full-width">
-                                    <label for="birth-place">Birth Place</label>
-                                    <div class="input-container">
-                                        <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2">
-                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                                            <circle cx="12" cy="10" r="3" />
-                                        </svg>
-                                        <input type="text" id="birth-place" placeholder="Ahmedabad, Gujarat, India"
-                                            required>
-                                    </div>
+                                <div class="col-12 form-group">
+                                    <label class="form-label fw-semibold text-dark mb-1" for="birth-place">Birth Place</label>
+                                    <input type="text" id="birth-place" class="form-control form-control-lg rounded-3 fs-6" placeholder="Ahmedabad, Gujarat, India" required>
                                     <span class="error-msg">Please enter your birth place.</span>
                                 </div>
 
                                 <!-- Question -->
-                                <div class="form-group full-width">
-                                    <label for="question">Your Question</label>
-                                    <div class="input-container textarea-container">
-                                        <textarea id="question" rows="3"
-                                            placeholder="E.g., What career opportunities do my numbers predict for next year?"
-                                            required></textarea>
-                                    </div>
+                                <div class="col-12 form-group">
+                                    <label class="form-label fw-semibold text-dark mb-1" for="question">Your Question</label>
+                                    <textarea id="question" rows="3" class="form-control form-control-lg rounded-3 fs-6" placeholder="E.g., What career opportunities do my numbers predict for next year?" ></textarea>
                                     <span class="error-msg">Please share your main question.</span>
                                 </div>
 
                                 <!-- Appointment Date -->
-                                <div class="form-group">
-                                    <label for="booking-date">Choose Appointment Date</label>
-                                    <div class="input-container">
-                                        <input type="date" id="booking-date" required>
+                                <div class="col-md-6 form-group date-time-group custom-picker-group">
+                                    <label class="form-label fw-semibold text-dark mb-1" for="booking-date">Appointment Date</label>
+                                    <button type="button" id="booking-date-trigger" class="custom-picker-trigger" aria-haspopup="dialog" aria-expanded="false" aria-controls="booking-date-popover">
+                                        <span class="custom-picker-trigger-main" id="booking-date-display">Choose appointment date</span>
+                                        <span class="custom-picker-trigger-icon" aria-hidden="true">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="4" width="18" height="17" rx="3"></rect>
+                                                <line x1="8" y1="2.5" x2="8" y2="6"></line>
+                                                <line x1="16" y1="2.5" x2="16" y2="6"></line>
+                                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <input type="date" id="booking-date" class="custom-picker-storage" required tabindex="-1" aria-hidden="true">
+                                    <div id="booking-date-popover" class="custom-picker-popover date-picker-popover" hidden>
+                                        <div class="picker-panel">
+                                            <div class="picker-panel-header">
+                                                <button type="button" class="picker-nav-btn" id="booking-date-prev" aria-label="Previous month">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                                    </svg>
+                                                </button>
+                                                <div class="picker-panel-title date-picker-controls">
+                                                    <select id="booking-date-month-select" class="picker-select" aria-label="Appointment month"></select>
+                                                    <select id="booking-date-year-select" class="picker-select" aria-label="Appointment year"></select>
+                                                </div>
+                                                <button type="button" class="picker-nav-btn" id="booking-date-next" aria-label="Next month">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div class="picker-weekdays">
+                                                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                                            </div>
+                                            <div id="booking-date-grid" class="picker-grid"></div>
+                                        </div>
                                     </div>
                                     <span class="error-msg">Please select your appointment date.</span>
                                 </div>
 
                                 <!-- Appointment Time -->
-                                <div class="form-group">
-                                    <label for="booking-time">Choose Appointment Time Slot</label>
-                                    <div class="input-container">
-                                        <select id="booking-time" required disabled>
-                                            <option value="">Select Date First</option>
-                                        </select>
+                                <div class="col-md-6 form-group date-time-group custom-picker-group">
+                                    <label class="form-label fw-semibold text-dark mb-1" for="booking-time">Appointment Time Slot</label>
+                                    <button type="button" id="booking-time-trigger" class="custom-picker-trigger" aria-haspopup="dialog" aria-expanded="false" aria-controls="booking-time-popover" disabled>
+                                        <span class="custom-picker-trigger-main" id="booking-time-display">Select date first</span>
+                                        <span class="custom-picker-trigger-icon" aria-hidden="true">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="9"></circle>
+                                                <polyline points="12 7 12 12 15.5 14"></polyline>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <input type="hidden" id="booking-time" required>
+                                    <div id="booking-time-popover" class="custom-picker-popover time-picker-popover" hidden>
+                                        <div class="picker-panel time-panel">
+                                            <div class="picker-panel-header time-panel-header">
+                                                <div class="picker-panel-title">
+                                                    <span>Appointment Time Slot</span>
+                                                </div>
+                                            </div>
+                                            <div id="booking-time-grid" class="time-grid"></div>
+                                        </div>
                                     </div>
                                     <span class="error-msg">Please select an available time slot.</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <button type="submit" id="submit-btn" class="btn-primary">
-                                Pay & Book Consultation
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Payment Section -->
+                    <div class="col-lg-5">
+                        <div class="card p-4 p-md-5 border rounded-4 shadow-sm bg-white position-sticky" style="top: 100px;">
+                            <h3 class="fs-5 fw-bold text-dark mb-4">Payment Summary</h3>
+                            
+                            <div class="d-flex flex-column gap-3 mb-4 pb-4 border-bottom">
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-secondary fs-6">Selected Plan:</span>
+                                    <span id="summary-tier" class="fw-semibold text-dark fs-6">Soul Path Alignment</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-secondary fs-6">Session Duration:</span>
+                                    <span id="summary-duration" class="fw-semibold text-dark fs-6">45 Minutes</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-secondary fs-6">Appointment:</span>
+                                    <span id="summary-date-time" class="fw-semibold text-primary fs-6">Select Date & Time</span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <span class="text-dark fw-bold fs-5">Consultation Fee</span>
+                                <span id="summary-price" class="text-dark fw-bold fs-3">₹750</span>
+                            </div>
+
+                            <div class="alert alert-light border rounded-3 p-3 mb-4">
+                                <p class="small text-secondary m-0 d-flex gap-2 align-items-start" style="line-height: 1.5;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary flex-shrink-0" style="margin-top: 2px;">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    Please enter your exact details to ensure accurate calculations. Payments are securely processed via Razorpay.
+                                </p>
+                            </div>
+
+                            <button type="submit" id="submit-btn" class="btn btn-primary btn-lg w-100 py-3 rounded-3 text-white fw-bold fs-6 d-flex align-items-center justify-content-center gap-2">
+                                Pay with Razorpay
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                     <polyline points="12 5 19 12 12 19"></polyline>
                                 </svg>
                             </button>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </section>
 
         <!-- VIEW 3: SUCCESS STATE -->
-        <section id="success-view" class="view">
-            <div class="success-card">
-                <div class="success-icon-wrapper">
-                    <svg class="success-check-svg" width="64" height="64" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10" stroke="#D4AF37" stroke-width="1.5"
-                            fill="rgba(212, 175, 55, 0.1)" />
-                        <path d="M8 12.5L11 15.5L16 9" stroke="#E5C158" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
+        <section id="success-view" class="view container py-5">
+            <div class="card p-4 p-md-5 border rounded-4 shadow-sm bg-white text-center mx-auto" style="max-width: 580px;">
+                <div class="success-icon-wrapper text-success mb-4 d-flex justify-content-center">
+                    <svg class="success-check-svg text-success" width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M8 12.5L11 15.5L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <h2 class="success-title">Your Session is Reserved</h2>
-                <p class="success-message">A confirmation email has been sent. Your details have been transmitted to prepare your custom chart analysis prior to our session.</p>
+                <h2 class="display-6 fs-3 fw-bold text-dark mb-3">Your Session is Reserved</h2>
+                <p class="text-secondary mb-4 fs-6">A confirmation email has been sent. Your details have been transmitted to prepare your custom chart analysis prior to our session.</p>
 
-                <div class="booking-receipt">
-                    <div class="receipt-row">
-                        <span class="label">Consultation:</span>
-                        <span id="receipt-tier" class="value">Soul Path Alignment</span>
+                <div class="booking-receipt bg-light border rounded-3 p-4 mb-4 text-start">
+                    <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                        <span class="text-secondary fs-6">Consultation:</span>
+                        <span id="receipt-tier" class="fw-semibold text-dark fs-6">Soul Path Alignment</span>
                     </div>
-                    <div class="receipt-row">
-                        <span class="label">Booked Slot:</span>
-                        <span id="receipt-time" class="value highlight">10:00 AM EST</span>
+                    <div class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                        <span class="text-secondary fs-6">Booked Slot:</span>
+                        <span id="receipt-time" class="fw-semibold text-primary fs-6">10:00 AM EST</span>
                     </div>
-                    <div class="receipt-row">
-                        <span class="label">Name:</span>
-                        <span id="receipt-name" class="value">John Doe</span>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-secondary fs-6">Name:</span>
+                        <span id="receipt-name" class="fw-semibold text-dark fs-6">John Doe</span>
                     </div>
                 </div>
 
-                <div class="calculating-overlay">
+                <div class="calculating-overlay d-flex flex-column align-items-center gap-2 mb-4">
                     <div class="spinner"></div>
-                    <span>Aligning destiny coefficients...</span>
+                    <span class="text-secondary fst-italic fs-6">Aligning destiny coefficients...</span>
                 </div>
 
-                <button id="reset-btn" class="btn-primary">Book Another Session</button>
+                <button id="reset-btn" class="btn btn-primary btn-lg w-100 py-3 rounded-3 text-white fw-bold fs-6">Book Another Session</button>
             </div>
         </section>
     </main>
 
-    <footer class="app-footer">
-        <p>&copy; 2026 AuraNumerology. All paths aligned. Designed for spiritual growth.</p>
+    <!-- Centered Footer -->
+    <footer class="app-footer border-top bg-white py-5 mt-5">
+        <div class="container text-center">
+            <!-- <div class="fw-bold text-dark fs-5 mb-3" style="letter-spacing: 0.05em;">AURA<span style="color: #0F2747;">NUMEROLOGY</span></div> -->
+            <!-- <div class="d-flex justify-content-center gap-4 mb-4 flex-wrap fs-6">
+                <a href="mailto:contact@auranumerology.com" class="text-secondary text-decoration-none hover-primary">contact@auranumerology.com</a>
+                <a href="#" class="text-secondary text-decoration-none hover-primary">Privacy Policy</a>
+                <a href="#" class="text-secondary text-decoration-none hover-primary">Terms & Conditions</a>
+            </div> -->
+            <p class="text-muted small mb-0">&copy; 2026 AuraNumerology. All rights reserved.</p>
+        </div>
     </footer>
 
+    <!-- AuraNumerology Premium Numerology Loader -->
+    <div id="numerology-loader" class="numerology-loader-overlay">
+        <div class="loader-content">
+            <!-- Minimalist rotating rings & cycling numbers -->
+            <div class="numerology-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring-inner"></div>
+                <div class="active-number" id="loader-number">1</div>
+            </div>
+            <div class="loader-status">
+                <span class="status-dot"></span>
+                <span id="loader-status-text">ALIGNING CORE NUMBERS</span>
+            </div>
+            <div class="loader-progress-bar">
+                <div class="progress-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- App Script -->
     <script src="../js/app.js"></script>
 </body>

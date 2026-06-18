@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraNumerology — Premium Numerology Loader</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #FAFAF8;
+            --accent: #0F2747;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-primary);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* --- Numerology Loader Styles --- */
+        .numerology-loader-overlay {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .numerology-loader-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .numerology-spinner {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(15, 39, 71, 0.05);
+            border-top: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: loader-spin-outer 1.5s cubic-bezier(0.53, 0.21, 0.29, 0.67) infinite;
+        }
+
+        .spinner-ring-inner {
+            position: absolute;
+            width: 75%;
+            height: 75%;
+            border: 2px solid rgba(15, 39, 71, 0.03);
+            border-bottom: 2px solid var(--accent);
+            border-radius: 50%;
+            animation: loader-spin-inner 1.2s cubic-bezier(0.53, 0.21, 0.29, 0.67) infinite reverse;
+        }
+
+        .active-number {
+            font-family: 'Inter', monospace;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .loader-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: rgba(15, 39, 71, 0.6);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            animation: dot-pulse 0.6s infinite alternate;
+        }
+
+        .loader-progress-bar {
+            width: 140px;
+            height: 2px;
+            background-color: rgba(15, 39, 71, 0.08);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent);
+            animation: progress-fill-anim 1.5s forwards linear;
+        }
+
+        /* Animations */
+        @keyframes loader-spin-outer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes loader-spin-inner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes dot-pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes progress-fill-anim {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .redirect-notice {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: rgba(15, 39, 71, 0.4);
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="numerology-loader" class="numerology-loader-overlay">
+        <div class="loader-content">
+            <div class="numerology-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring-inner"></div>
+                <div class="active-number" id="loader-number">1</div>
+            </div>
+            <div class="loader-status">
+                <span class="status-dot"></span>
+                <span id="loader-status-text">ALIGNING CORE NUMBERS</span>
+            </div>
+            <div class="loader-progress-bar">
+                <div class="progress-bar-fill"></div>
+            </div>
+            <div class="redirect-notice">REDIRECTING IN 1.5s...</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loaderNumber = document.getElementById('loader-number');
+            const statusText = document.getElementById('loader-status-text');
+
+            // Cycle numbers 1-9 representing destiny parameters
+            let currentNum = 1;
+            const numberInterval = setInterval(() => {
+                currentNum = (currentNum % 9) + 1;
+                if (loaderNumber) loaderNumber.innerText = currentNum;
+            }, 1500);
+
+            // Cycle status messages
+            const statuses = [
+                "ALIGNING CORE NUMBERS",
+                "CALCULATING LIFE PATH",
+                "DECODING DESTINY PARAMETERS"
+            ];
+            let statusIndex = 0;
+            const statusInterval = setInterval(() => {
+                statusIndex = (statusIndex + 1) % statuses.length;
+                if (statusText) statusText.innerText = statuses[statusIndex];
+            }, 1500);
+
+            // Redirect back to main page after 1.5 seconds
+            setTimeout(() => {
+                clearInterval(numberInterval);
+                clearInterval(statusInterval);
+                document.getElementById('numerology-loader').classList.add('fade-out');
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
