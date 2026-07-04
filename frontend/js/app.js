@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // API Server Config
-    const API_BASE_URL = 'http://localhost:5000/api';
+    const API_BASE_URL = (window.APP_CONFIG && window.APP_CONFIG.API_BASE_URL) || '/api';
 
     // Navigation / Views Elements
     const landingView = document.getElementById('landing-view');

@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/api/*"
+  to = "https://numerology-site-tgac.onrender.com"
+  status = 200
+  force = true
