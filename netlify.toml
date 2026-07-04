@@ -3,3 +3,9 @@
   to = "https://numerology-site-tgac.onrender.com"
   status = 200
   force = true
+
+[[redirects]]
+  from = "/"
+  to = "/html/index.html"
+  status = 200
+  force = false
