@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/api/*"
-  to = "https://numerology-site-tgac.onrender.com"
+  to = "https://numerology-site-tgac.onrender.com/api/:splat"
   status = 200
   force = true
 
