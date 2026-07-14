@@ -948,5 +948,25 @@
             }
         });
     </script>
+    <script>
+        // Enable horizontal scroll with vertical mouse wheel when hovering wide tables
+        (function () {
+            document.addEventListener('DOMContentLoaded', function () {
+                const wrappers = document.querySelectorAll('.table-card .table-responsive');
+                wrappers.forEach(wrapper => {
+                    wrapper.addEventListener('wheel', function (e) {
+                        // Only intercept when horizontal overflow exists
+                        if (this.scrollWidth <= this.clientWidth) return;
+
+                        // Convert vertical scroll to horizontal for easier side-scroll
+                        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                            e.preventDefault();
+                            this.scrollLeft += e.deltaY;
+                        }
+                    }, { passive: false });
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
