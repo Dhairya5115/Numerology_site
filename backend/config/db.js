@@ -65,7 +65,12 @@ const seedPackages = async () => {
 const connectDB = async () => {
     try {
         const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/numerologyDB';
-        const conn = await mongoose.connect(mongoURI);
+        const conn = await mongoose.connect(mongoURI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 10000,
+            socketTimeoutMS: 30000
+        });
         console.log(`MongoDB Connected: ${conn.connection.host}`);
         
         // Seed default database packages
