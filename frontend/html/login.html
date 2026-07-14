@@ -296,6 +296,10 @@
         .table-card .table-responsive {
             overflow-x: auto;
         }
+        .table-card .table-responsive.dragging {
+            cursor: grabbing;
+            cursor: -webkit-grabbing;
+        }
     </style>
 </head>
 <body>
@@ -949,21 +953,55 @@
         });
     </script>
     <script>
-        // Enable horizontal scroll with vertical mouse wheel when hovering wide tables
+        // Enable draggable horizontal scroll (click-drag & touch) for wide tables
         (function () {
             document.addEventListener('DOMContentLoaded', function () {
                 const wrappers = document.querySelectorAll('.table-card .table-responsive');
                 wrappers.forEach(wrapper => {
-                    wrapper.addEventListener('wheel', function (e) {
-                        // Only intercept when horizontal overflow exists
-                        if (this.scrollWidth <= this.clientWidth) return;
+                    let isDown = false;
+                    let startX;
+                    let scrollLeft;
 
-                        // Convert vertical scroll to horizontal for easier side-scroll
-                        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                            e.preventDefault();
-                            this.scrollLeft += e.deltaY;
-                        }
-                    }, { passive: false });
+                    wrapper.addEventListener('mousedown', function (e) {
+                        if (this.scrollWidth <= this.clientWidth) return;
+                        isDown = true;
+                        this.classList.add('dragging');
+                        startX = e.pageX - this.offsetLeft;
+                        scrollLeft = this.scrollLeft;
+                        e.preventDefault();
+                    });
+
+                    wrapper.addEventListener('mouseleave', function () {
+                        isDown = false;
+                        this.classList.remove('dragging');
+                    });
+
+                    wrapper.addEventListener('mouseup', function () {
+                        isDown = false;
+                        this.classList.remove('dragging');
+                    });
+
+                    wrapper.addEventListener('mousemove', function (e) {
+                        if (!isDown) return;
+                        e.preventDefault();
+                        const x = e.pageX - this.offsetLeft;
+                        const walk = (x - startX) * 1.5; // scroll-fast multiplier
+                        this.scrollLeft = scrollLeft - walk;
+                    });
+
+                    // Touch support
+                    wrapper.addEventListener('touchstart', function (e) {
+                        if (this.scrollWidth <= this.clientWidth) return;
+                        startX = e.touches[0].pageX - this.offsetLeft;
+                        scrollLeft = this.scrollLeft;
+                    }, { passive: true });
+
+                    wrapper.addEventListener('touchmove', function (e) {
+                        if (this.scrollWidth <= this.clientWidth) return;
+                        const x = e.touches[0].pageX - this.offsetLeft;
+                        const walk = (x - startX) * 1.5;
+                        this.scrollLeft = scrollLeft - walk;
+                    }, { passive: true });
                 });
             });
         })();
