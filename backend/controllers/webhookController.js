@@ -105,6 +105,10 @@ const sendEmailNotifications = async (appointment, user, pack) => {
  */
 const handleWebhook = async (req, res) => {
     try {
+        // Log basic incoming webhook info for diagnostics
+        console.log('[Webhook] Received headers:', JSON.stringify(req.headers));
+        console.log('[Webhook] Received body (first 1000 chars):', JSON.stringify(req.body).slice(0, 1000));
+
         const eventId = req.body.id;
         const eventType = req.body.event;
 

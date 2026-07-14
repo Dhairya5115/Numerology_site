@@ -822,10 +822,22 @@ document.addEventListener('DOMContentLoaded', () => {
                         const verifyData = await verifyRes.json();
 
                         if (verifyRes.ok && verifyData.success) {
-                            // Populate receipt detail page
-                            receiptTier.innerText = selectedPlan.name;
-                            receiptTime.innerText = `${formatCalendarDate(bookingDateInput.value)} • ${bookingTimeInput.value}`;
-                            receiptName.innerText = fullNameInput.value.trim();
+                            // Use appointment data returned from server to populate receipt
+                            const appointment = verifyData.appointment || {};
+                            const user = appointment.userId || {};
+                            receiptTier.innerText = appointment.packageId ? (appointment.packageId.title || selectedPlan.name) : selectedPlan.name;
+                            // If server returned scheduledDate and scheduledTime, use them; otherwise fallback to local values
+                            let scheduledDate = appointment.scheduledDate || bookingDateInput.value;
+                            const scheduledTime = appointment.scheduledTime || bookingTimeInput.value;
+                            // Normalize scheduledDate to YYYY-MM-DD for formatCalendarDate
+                            if (typeof scheduledDate === 'string' && scheduledDate.includes('T')) {
+                                scheduledDate = scheduledDate.split('T')[0];
+                            } else if (scheduledDate instanceof Date) {
+                                scheduledDate = toLocalISODate(new Date(scheduledDate));
+                            }
+                            receiptTime.innerText = `${formatCalendarDate(scheduledDate)} • ${scheduledTime}`;
+                            // Use stored user info if available
+                            receiptName.innerText = user.name || fullNameInput.value.trim();
 
                             text.innerText = "Synchronizing cosmic coefficients...";
                             setTimeout(() => {

@@ -251,10 +251,16 @@ const verifyPaymentAndBook = async (req, res) => {
         await updateUserStatus('paid');
         sendEmailNotifications(appointment, user, pack);
 
+        // Populate appointment with user and package references for frontend convenience
+        const populatedAppointment = await Appointment.findById(appointment._id)
+            .populate('userId')
+            .populate('packageId')
+            .lean();
+
         return res.status(200).json({
             success: true,
             message: 'Payment verified and booking confirmed successfully',
-            appointment
+            appointment: populatedAppointment
         });
     } catch (error) {
         if (user && user.paymentStatus !== 'paid') {

@@ -11,6 +11,9 @@ module.exports = (req, res, next) => {
         }
 
         const secret = process.env.RAZORPAY_WEBHOOK_SECRET || 'dummy_webhook_secret';
+        if (!process.env.RAZORPAY_WEBHOOK_SECRET) {
+            console.warn('Warning: RAZORPAY_WEBHOOK_SECRET is not set. Webhook signature verification will use a dummy secret.');
+        }
         
         // Use rawBody if populated by express.json() custom verifier, else fallback
         const payload = req.rawBody || JSON.stringify(req.body);
@@ -21,6 +24,9 @@ module.exports = (req, res, next) => {
 
         if (expectedSignature !== signature) {
             console.error('Razorpay webhook signature verification failed.');
+            console.error('Received signature:', signature);
+            console.error('Expected signature:', expectedSignature);
+            console.error('Payload (first 1000 chars):', payload && payload.toString().slice(0, 1000));
             return res.status(400).json({ error: 'Invalid webhook signature' });
         }
 
